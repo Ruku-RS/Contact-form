@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import emailjs from '@emailjs/browser'
 
-const ContactForm = () => {
+
+const ContactForm = ({setNotification}) => {
 
 const formData = useRef('');
 
@@ -11,11 +12,17 @@ const sendEmail = (e)=>{
     // Email setup
     emailjs.sendForm('service_l4n9zqb', 'template_50wvi88', formData.current, 'r0MzDsaymRwexDK_-').then(
         ()=>{
-            alert('Message sent successfully!');
+            setNotification('Message sent successfully!');
+            setTimeout(() => {
+                setNotification('')
+            }, 3000);
             formData.current.reset();
         },
         (error)=>{
-            alert('Failed to send message!');
+            setNotification('Failed to send message!');
+            setTimeout(() => {
+                setNotification('')
+            }, 3000);
             console.error(error.text);
         }
     )
